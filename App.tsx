@@ -52,88 +52,124 @@ const INITIAL_TESTIMONIALS: Testimonial[] = [
   }
 ];
 
-// Predefined Themes
+// Apple-Inspired Premium Themes
 const THEMES: ThemeConfig[] = [
   {
-    id: 'modern-dark',
-    name: 'ليلي عصري',
-    primary: '#6366f1', // indigo-500
-    secondary: '#a855f7', // purple-500
-    starColor: '#fbbf24', // amber-400
-    cardBg: '#0f172a', // slate-900
-    textColor: '#f8fafc' // slate-50
-  },
-  {
-    id: 'deep-ocean',
-    name: 'أعماق المحيط',
-    primary: '#0ea5e9', // sky-500
-    secondary: '#1d4ed8', // blue-700
-    starColor: '#38bdf8', // sky-400
-    cardBg: '#0c4a6e', // sky-900
-    textColor: '#f0f9ff' // sky-50
-  },
-  {
-    id: 'glass-light',
-    name: 'زجاجي فاتح',
-    primary: '#0ea5e9', // sky-500
-    secondary: '#22d3ee', // cyan-400
-    starColor: '#f59e0b', // amber-500
-    cardBg: 'rgba(255, 255, 255, 0.85)',
-    textColor: '#0f172a'
-  },
-  {
-    id: 'luxury-gold',
-    name: 'ذهبي ملكي',
-    primary: '#d97706', // amber-600
-    secondary: '#fef3c7', // amber-100
-    starColor: '#d97706',
-    cardBg: '#1c1917', // stone-900
-    textColor: '#fafaf9' // stone-50
-  },
-  {
-    id: 'minimal-soft',
-    name: 'بسيط ناعم',
-    primary: '#10b981', // emerald-500
-    secondary: '#d1fae5', // emerald-100
-    starColor: '#10b981',
+    id: 'apple-silver',
+    name: 'أبل فضي (Light)',
+    primary: '#007aff', // Apple Blue
+    secondary: '#8e8e93', // Apple Gray
+    starColor: '#ff9500', // Apple Orange
     cardBg: '#ffffff',
-    textColor: '#064e3b'
+    textColor: '#1d1d1f' // Apple Black
   },
   {
-    id: 'corporate-blue',
-    name: 'احترافي أزرق',
-    primary: '#2563eb', // blue-600
-    secondary: '#bfdbfe', // blue-200
-    starColor: '#facc15', // yellow-400
-    cardBg: '#f8fafc', // slate-50
-    textColor: '#1e3a8a' // blue-900
+    id: 'apple-space-gray',
+    name: 'رمادي فلكي (Space)',
+    primary: '#0a84ff', // Light Blue
+    secondary: '#636366',
+    starColor: '#ffd60a', // Apple Yellow
+    cardBg: '#1c1c1e', // Apple Dark Gray
+    textColor: '#f5f5f7' // Apple Off-white
   },
   {
-    id: 'vibrant-rose',
-    name: 'وردي حيوي',
-    primary: '#e11d48', // rose-600
-    secondary: '#fb7185', // rose-400
-    starColor: '#e11d48',
-    cardBg: '#fff1f2', // rose-50
-    textColor: '#881337' // rose-900
-  },
-  {
-    id: 'midnight-black',
-    name: 'أسود منتصف الليل',
-    primary: '#f8fafc',
-    secondary: '#334155',
-    starColor: '#facc15',
+    id: 'apple-midnight',
+    name: 'منتصف الليل (OLED)',
+    primary: '#f5f5f7',
+    secondary: '#3a3a3c',
+    starColor: '#ffd60a',
     cardBg: '#000000',
     textColor: '#ffffff'
   },
   {
-    id: 'brutalist-yellow',
-    name: 'بروتاليست أصفر',
-    primary: '#000000',
-    secondary: '#ffffff',
-    starColor: '#000000',
-    cardBg: '#fbaf00',
+    id: 'apple-starlight',
+    name: 'أضواء النجوم (Warm)',
+    primary: '#bf5af2', // Apple Purple
+    secondary: '#e5e5ea',
+    starColor: '#ff3b30', // Apple Red
+    cardBg: '#fbfbfd',
+    textColor: '#1d1d1f'
+  },
+  {
+    id: 'apple-pacific-blue',
+    name: 'أزرق المحيط (Pro)',
+    primary: '#64d2ff', // Sky Blue
+    secondary: '#32ade6',
+    starColor: '#ffd60a',
+    cardBg: '#00334e',
+    textColor: '#f5f5f7'
+  },
+  {
+    id: 'glass-pro-dark',
+    name: 'زجاجي داكن (Blur)',
+    primary: '#ffffff',
+    secondary: 'rgba(255, 255, 255, 0.2)',
+    starColor: '#ff9500',
+    cardBg: 'rgba(28, 28, 30, 0.8)',
+    textColor: '#f5f5f7'
+  },
+  {
+    id: 'glass-pro-light',
+    name: 'زجاجي فاتح (Blur)',
+    primary: '#007aff',
+    secondary: 'rgba(0, 122, 255, 0.1)',
+    starColor: '#ff9500',
+    cardBg: 'rgba(255, 255, 255, 0.7)',
+    textColor: '#1d1d1f'
+  },
+  {
+    id: 'apple-alpine-green',
+    name: 'أخضر جبلي (Pro)',
+    primary: '#30d158', // Apple Green
+    secondary: '#34c759',
+    starColor: '#ffcc00',
+    cardBg: '#1a3a32',
+    textColor: '#f5f5f7'
+  },
+  {
+    id: 'daylight-clean',
+    name: 'بياض ناصع',
+    primary: '#007aff',
+    secondary: '#e5e5ea',
+    starColor: '#ff9500',
+    cardBg: '#ffffff',
     textColor: '#000000'
+  },
+  {
+    id: 'daylight-cream',
+    name: 'بيج ملكي',
+    primary: '#a68a64',
+    secondary: '#f5ebe0',
+    starColor: '#d4af37',
+    cardBg: '#faf9f6',
+    textColor: '#432818'
+  },
+  {
+    id: 'daylight-rose',
+    name: 'وردي ناعم',
+    primary: '#ff2d55',
+    secondary: '#fff0f3',
+    starColor: '#ff2d55',
+    cardBg: '#fff9fa',
+    textColor: '#800020'
+  },
+  {
+    id: 'daylight-mint',
+    name: 'نعناع منعش',
+    primary: '#00c7be',
+    secondary: '#e5faf9',
+    starColor: '#00c7be',
+    cardBg: '#f2fcfc',
+    textColor: '#004d49'
+  },
+  {
+    id: 'daylight-lavender',
+    name: 'لافندر هادئ',
+    primary: '#af52de',
+    secondary: '#f3e8ff',
+    starColor: '#af52de',
+    cardBg: '#faf5ff',
+    textColor: '#4c007d'
   }
 ];
 
@@ -619,7 +655,7 @@ const App: React.FC = () => {
                       <button
                         key={idx}
                         onClick={() => updateThemeField('logoUrl', logoPath)}
-                        className={`aspect-square rounded-xl border-2 flex items-center justify-center p-2 transition-all ${(currentTheme.logoUrl === logoPath) || (!currentTheme.logoUrl && logoPath === '/logos/alinvestor white.svg')
+                        className={`aspect-square rounded-xl border-2 flex items-center justify-center p-2 transition-all ${(currentTheme.logoUrl === logoPath) || (!currentTheme.logoUrl && logoPath === '/logos/Logo (2).svg')
                           ? 'border-indigo-600 bg-indigo-50'
                           : 'border-gray-100 hover:border-gray-200 bg-white'
                           }`}
