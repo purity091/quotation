@@ -11,6 +11,9 @@
 .testimonial-card {
   transition: all var(--transition-speed) cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: var(--card-shadow);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .testimonial-card:hover {
@@ -54,17 +57,18 @@
 
 .testimonial-text {
   font-size: 1.5rem;
-  line-height: 1.8;
-  margin-bottom: 2.5rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
   text-align: center;
   font-weight: 500;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
 
 @media (min-width: 768px) {
   .testimonial-text {
-    font-size: 2.65rem;
-    line-height: 1.8;
-    margin-bottom: 3.5rem;
+    font-size: 2.25rem;
+    line-height: 1.5;
+    margin-bottom: 2.5rem;
   }
 }
 
@@ -112,8 +116,8 @@
 
 @media (min-width: 768px) {
   .profile-avatar {
-    width: 12rem;
-    height: 12rem;
+    width: 15rem;
+    height: 15rem;
     border-width: 6px;
   }
 
@@ -130,27 +134,23 @@
 /* Branding & Navigation */
 .branding-container {
   position: absolute;
-  bottom: 2rem;
-  left: 2.5rem;
-  right: 2.5rem;
+  bottom: 3.5rem;
+  left: 4rem;
+  right: 4rem;
   display: flex;
   justify-content: space-between;
-  align-items: anchor-center;
-  flex-direction: row-reverse;
+  align-items: center;
+  flex-direction: row; /* Swapped from row-reverse */
   z-index: 20;
 }
 
 .brand-en {
-  font-size: 16px;
-  font-weight: 900;
-  opacity: 0.8;
-  margin-left: 60px;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
 }
 
 .brand-ar {
-  font-size: 20px;
-  font-weight: 900;
-  opacity: 0.8;
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
 }
 
 .nav-button {

@@ -56,12 +56,11 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
         ></div>
 
         <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-10 md:p-14 pb-32 md:pb-48 text-center pt-16 md:pt-20">
-          {/* Quote Icon */}
           <div
             className="quote-icon mb-4 md:mb-8"
             style={{ color: theme.primary }}
           >
-            <Quote size={64} className="fill-current opacity-70" />
+            <Quote size={64} className="fill-current opacity-70 transition-transform duration-500 hover:scale-110" />
           </div>
 
           {/* Testimonial Content */}
@@ -113,41 +112,61 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
           </div>
         </div>
 
-        {/* Branding Branding */}
-        <div className="branding-container flex items-center justify-between w-full p-6  absolute bottom-0 left-0 right-0">
-          {/* Left side: Domain name */}
-          <span
-
-            dir="ltr"
-            className="brand-en text-sm md:text-base font-bold tracking-widest  opacity-80"
-            style={{ color: theme.primary }}
-          >
-            al-investor.com
-          </span>
-
-          {/* Right side: Arabic logo & text */}
-          <div className="flex items-center justify-end gap-4" dir="rtl">
+        {/* Ultra-Minimalist Branding Footer */}
+        <div className="branding-container absolute bottom-12 left-12 right-12 flex items-center justify-between z-20 transition-all duration-500">
+          
+          {/* Modern Branding Section (Now on the Left) */}
+          <div className="flex items-center gap-4 group" dir="ltr">
             <div
-              className="flex items-center justify-center bg-white rounded-lg shadow-sm"
-              style={{ width: '64px', height: '64px', aspectRatio: '1/1', border: `2px solid ${theme.primary}` }}
+              className="relative flex items-center justify-center bg-transparent"
+              style={{ width: '48px', height: '48px' }}
             >
+              {/* Subtle background glow on hover */}
+              <div className="absolute inset-0 bg-current opacity-0 group-hover:opacity-5 rounded-full blur-xl transition-opacity" style={{ color: theme.primary }}></div>
+              
               <img
                 src={theme.logoUrl || "/alinvestor white.svg"}
                 alt="Logo"
-                className="w-10 h-10 object-contain"
-                style={{ filter: theme.cardBg === '#1e293b' ? 'invert(1)' : 'brightness(0)' }}
+                className="w-10 h-10 object-contain relative z-10 transition-transform duration-500 group-hover:scale-110"
+                style={{ 
+                  filter: (theme.cardBg.includes('rgba') || theme.cardBg === '#ffffff' || theme.cardBg === '#f8fafc' || theme.cardBg === '#fff1f2') 
+                    ? 'brightness(0)' 
+                    : 'invert(1) brightness(1.5)'
+                }}
               />
             </div>
-            <div className="flex flex-col text-right">
+            
+            <div className="flex flex-col text-left border-l-2 pl-4" style={{ borderColor: `${theme.primary}33` }}>
               <span
-                className="text-base md:text-lg font-bold leading-tight tracking-tight"
+                className="text-xl font-black tracking-tight leading-none mb-1"
                 style={{ color: theme.primary }}
               >
-                منصة المستثمر الاقتصادية
+                المستثمر
               </span>
-
+              <span 
+                className="text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] opacity-40"
+                style={{ color: theme.textColor }}
+              >
+                ECONOMIC PLATFORM
+              </span>
             </div>
           </div>
+
+          {/* Left side: Domain name (LTR) */}
+          <div className="flex flex-col items-end">
+             <span
+              dir="ltr"
+              className="text-sm md:text-base font-black tracking-[0.3em] uppercase opacity-70 hover:opacity-100 transition-opacity cursor-default"
+              style={{ color: theme.primary }}
+            >
+              AL-INVESTOR<span className="opacity-40 font-medium">.COM</span>
+            </span>
+            <div 
+              className="h-[2px] w-8 mt-1 rounded-full" 
+              style={{ backgroundColor: theme.primary }}
+            ></div>
+          </div>
+
         </div>
       </div>
     </div>

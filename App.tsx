@@ -55,49 +55,85 @@ const INITIAL_TESTIMONIALS: Testimonial[] = [
 // Predefined Themes
 const THEMES: ThemeConfig[] = [
   {
-    id: 'indigo',
-    name: 'رسمي (نيلي)',
-    primary: '#4f46e5', // indigo-600
-    secondary: '#a5b4fc', // indigo-300
+    id: 'modern-dark',
+    name: 'ليلي عصري',
+    primary: '#6366f1', // indigo-500
+    secondary: '#a855f7', // purple-500
     starColor: '#fbbf24', // amber-400
-    cardBg: '#ffffff',
-    textColor: '#1e293b' // slate-800
+    cardBg: '#0f172a', // slate-900
+    textColor: '#f8fafc' // slate-50
   },
   {
-    id: 'emerald',
-    name: 'طبيعة (زمردي)',
-    primary: '#059669', // emerald-600
-    secondary: '#6ee7b7', // emerald-300
-    starColor: '#059669', // matching star
-    cardBg: '#ffffff',
-    textColor: '#064e3b' // emerald-900
+    id: 'deep-ocean',
+    name: 'أعماق المحيط',
+    primary: '#0ea5e9', // sky-500
+    secondary: '#1d4ed8', // blue-700
+    starColor: '#38bdf8', // sky-400
+    cardBg: '#0c4a6e', // sky-900
+    textColor: '#f0f9ff' // sky-50
   },
   {
-    id: 'rose',
-    name: 'حيوي (وردي)',
+    id: 'glass-light',
+    name: 'زجاجي فاتح',
+    primary: '#0ea5e9', // sky-500
+    secondary: '#22d3ee', // cyan-400
+    starColor: '#f59e0b', // amber-500
+    cardBg: 'rgba(255, 255, 255, 0.85)',
+    textColor: '#0f172a'
+  },
+  {
+    id: 'luxury-gold',
+    name: 'ذهبي ملكي',
+    primary: '#d97706', // amber-600
+    secondary: '#fef3c7', // amber-100
+    starColor: '#d97706',
+    cardBg: '#1c1917', // stone-900
+    textColor: '#fafaf9' // stone-50
+  },
+  {
+    id: 'minimal-soft',
+    name: 'بسيط ناعم',
+    primary: '#10b981', // emerald-500
+    secondary: '#d1fae5', // emerald-100
+    starColor: '#10b981',
+    cardBg: '#ffffff',
+    textColor: '#064e3b'
+  },
+  {
+    id: 'corporate-blue',
+    name: 'احترافي أزرق',
+    primary: '#2563eb', // blue-600
+    secondary: '#bfdbfe', // blue-200
+    starColor: '#facc15', // yellow-400
+    cardBg: '#f8fafc', // slate-50
+    textColor: '#1e3a8a' // blue-900
+  },
+  {
+    id: 'vibrant-rose',
+    name: 'وردي حيوي',
     primary: '#e11d48', // rose-600
-    secondary: '#fda4af', // rose-300
+    secondary: '#fb7185', // rose-400
     starColor: '#e11d48',
     cardBg: '#fff1f2', // rose-50
     textColor: '#881337' // rose-900
   },
   {
-    id: 'dark',
-    name: 'ليلي (داكن)',
-    primary: '#6366f1', // indigo-500
-    secondary: '#4338ca', // indigo-700
-    starColor: '#facc15', // yellow-400
-    cardBg: '#1e293b', // slate-800
-    textColor: '#f8fafc' // slate-50
+    id: 'midnight-black',
+    name: 'أسود منتصف الليل',
+    primary: '#f8fafc',
+    secondary: '#334155',
+    starColor: '#facc15',
+    cardBg: '#000000',
+    textColor: '#ffffff'
   },
   {
-    id: 'luxury',
-    name: 'فاخر (ذهبي)',
-    primary: '#b45309', // amber-700
-    secondary: '#fcd34d', // amber-300
-    starColor: '#b45309',
-    cardBg: '#fffbeb', // amber-50
-    textColor: '#451a03' // amber-950
+    id: 'brutalist-yellow',
+    name: 'بروتاليست أصفر',
+    primary: '#000000',
+    secondary: '#ffffff',
+    starColor: '#000000',
+    cardBg: '#fbaf00',
+    textColor: '#000000'
   }
 ];
 
@@ -491,13 +527,16 @@ const App: React.FC = () => {
                       <button
                         key={theme.id}
                         onClick={() => setCurrentTheme(theme)}
-                        className={`p-3 rounded-xl border-2 flex items-center justify-between transition-all ${currentTheme.id === theme.id ? 'border-indigo-600 bg-indigo-50' : 'border-gray-100 hover:border-gray-200 bg-white'}`}
+                        className={`p-3 rounded-xl border-2 flex items-center justify-between transition-all hover:scale-[1.02] active:scale-[0.98] ${currentTheme.id === theme.id ? 'border-indigo-600 bg-indigo-50' : 'border-gray-100 hover:border-gray-200 bg-white'}`}
                       >
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-full shadow-sm border border-black/10" style={{ backgroundColor: theme.primary }}></div>
-                          <span className="text-sm font-medium text-gray-700">{theme.name}</span>
+                          <div className="flex -space-x-1">
+                            <div className="w-5 h-5 rounded-full shadow-sm border border-black/10 z-10" style={{ backgroundColor: theme.primary }}></div>
+                            <div className="w-5 h-5 rounded-full shadow-sm border border-black/10" style={{ backgroundColor: theme.cardBg }}></div>
+                          </div>
+                          <span className="text-xs font-semibold text-gray-700">{theme.name}</span>
                         </div>
-                        {currentTheme.id === theme.id && <Check size={16} className="text-indigo-600" />}
+                        {currentTheme.id === theme.id && <Check size={14} className="text-indigo-600" />}
                       </button>
                     ))}
                   </div>
@@ -536,18 +575,6 @@ const App: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <label className="text-sm text-gray-600">لون النجوم</label>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-gray-400 font-mono">{currentTheme.starColor}</span>
-                        <input
-                          type="color"
-                          value={currentTheme.starColor}
-                          onChange={(e) => updateThemeField('starColor', e.target.value)}
-                          className="w-8 h-8 rounded-lg cursor-pointer border-0 p-0 overflow-hidden"
-                        />
-                      </div>
-                    </div>
 
                     <div className="flex items-center justify-between">
                       <label className="text-sm text-gray-600">لون الخلفية</label>
