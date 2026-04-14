@@ -129,7 +129,7 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
           <div className="flex items-center gap-4 group" dir="rtl">
             <div
               className="relative flex items-center justify-center bg-transparent"
-              style={{ width: '48px', height: '48px' }}
+              style={{ width: '55px', height: '55px' }}
             >
               {/* Subtle background glow on hover */}
               <div className="absolute inset-0 bg-current opacity-0 group-hover:opacity-5 rounded-full blur-xl transition-opacity" style={{ color: theme.primary }}></div>
