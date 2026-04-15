@@ -488,7 +488,7 @@ const App: React.FC = () => {
                           { name: 'بنيامين جراهام', role: 'أبو استثمار القيمة', img: '/Benjamin Graham.png' },
                           { name: 'إيلون ماسك', role: 'مؤسس تسلا وسبيس إكس', img: '/elon mask.jpg' },
                           { name: 'بيتر لينش', role: 'مدير صندوق ماجلان السابق', img: '/Peter Lynch.jpg' },
-                          { name: 'راي داليو', role: 'مؤسس بريدج ووتر', img: '/It_s time to stop listening to Ray Dalio on China.jpg' },
+                          { name: 'راي داليو', role: 'مؤسس بريدج ووتر', img: '/Ray Dalio.jpg' },
                           { name: 'نافال رافيكانت', role: 'مؤسس أنجيل ليست', img: '/Naval Ravikant.jpg' },
                           { name: 'نسيم طالب', role: 'مؤلف البجعة السوداء', img: '/Nassim Nicholas Taleb.jpg' },
                           { name: 'بيل أكمان', role: 'مؤسس بيرشينج سكوير', img: '/Bill Ackman.jpg' },
@@ -496,13 +496,13 @@ const App: React.FC = () => {
                           { name: 'بيتر ثيل', role: 'مؤسس بالانتير', img: '/Peter Thiel.jpg' },
                           { name: 'سام ألتمان', role: 'الرئيس التنفيذي لـ OpenAI', img: '/Sam Altman.jpg' },
                           { name: 'ريد هوفمان', role: 'مؤسس لينكد إن', img: '/Reid Hoffman.jpg' },
-                          { name: 'كارل إيكان', role: 'مستثمر وناشط مالي', img: '/Too Trending News on Trendstoday App  Carl Icahn_ #Billionaire Carl Icahn #invests $150M in new #super PAC to #influence #Congress_ Get #trendstoday app for more updates_.jpg' },
-                          { name: 'ستانلي دروكنميلر', role: 'مستثمر ومدير صناديق تحوط', img: '/Stanley Druckenmiller says the stock market is in an _absolute raging mania_.jpg' },
-                          { name: 'هوارد ماركس', role: 'مؤسس أوكتري كابيتال', img: '/“To achieve superior investment results, your insight into value has to be superior_ Thus you must learn things others don’t, see things differently or do a better job of analyzing them – ideally all .” - Howard Marks.jpg' },
+                          { name: 'كارل إيكان', role: 'مستثمر وناشط مالي', img: '/Carl Icahn.jpg' },
+                          { name: 'ستانلي دروكنميلر', role: 'مستثمر ومدير صناديق تحوط', img: '/Stanley Druckenmiller.jpg' },
+                          { name: 'هوارد ماركس', role: 'مؤسس أوكتري كابيتال', img: '/Howard Marks.jpg' },
                           { name: 'محمد العريان', role: 'مستشار اقتصادي عالمي', img: '/El-Erian.jpg' },
-                          { name: 'مورغان هاوسل', role: 'مؤلف سيكولوجية المال', img: '/Morgan Housel no Expert XP 2025.jpg' },
-                          { name: 'مارك أندريسن', role: 'مؤسس أندريسن هورويتز', img: '/Marc Andreessen says AI will give rise to a new type of filmmaker_ _That_s a reason for profound optimism_.jpg' },
-                          { name: 'جون تمبلتون', role: 'مستثمر ورجل بر', img: '/Sir John Templeton - Life Story - https___www_templeton.org_sir-john-templeton_life-story.jpg' }
+                          { name: 'مورغان هاوسل', role: 'مؤلف سيكولوجية المال', img: '/Morgan Housel.jpg' },
+                          { name: 'مارك أندريسن', role: 'مؤسس أندريسن هورويتز', img: '/Marc Andreessen.jpg' },
+                          { name: 'جون تمبلتون', role: 'مستثمر ورجل بر', img: '/John Templeton.jpg' }
                         ].map(celeb => (
                           <button
                             key={celeb.name}

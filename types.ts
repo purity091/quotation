@@ -9,6 +9,7 @@ export interface Testimonial {
   avatarScale?: number;
   avatarX?: number;
   avatarY?: number;
+  customCss?: string;
 }
 
 export interface ThemeConfig {
