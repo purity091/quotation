@@ -481,11 +481,28 @@ const App: React.FC = () => {
                     {/* Predefined Famous Investors */}
                     <div className="mt-3">
                       <label className="block text-xs font-medium text-gray-500 mb-2">أو اختر من الشخصيات الشهيرة:</label>
-                      <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                      <div className="flex items-center gap-2 flex-wrap pb-2">
                         {[
                           { name: 'وارن بافيت', role: 'مستثمر ورجل أعمال', img: '/Warren Buffett.png' },
                           { name: 'تشارلي مونجر', role: 'مستثمر ونائب رئيس بيركشاير هاثاواي', img: '/Charlie Munger png.png' },
-                          { name: 'بنيامين جراهام', role: 'أبو استثمار القيمة', img: '/Benjamin Graham.png' }
+                          { name: 'بنيامين جراهام', role: 'أبو استثمار القيمة', img: '/Benjamin Graham.png' },
+                          { name: 'إيلون ماسك', role: 'مؤسس تسلا وسبيس إكس', img: '/elon mask.jpg' },
+                          { name: 'بيتر لينش', role: 'مدير صندوق ماجلان السابق', img: '/Peter Lynch.jpg' },
+                          { name: 'راي داليو', role: 'مؤسس بريدج ووتر', img: '/It_s time to stop listening to Ray Dalio on China.jpg' },
+                          { name: 'نافال رافيكانت', role: 'مؤسس أنجيل ليست', img: '/Naval Ravikant.jpg' },
+                          { name: 'نسيم طالب', role: 'مؤلف البجعة السوداء', img: '/Nassim Nicholas Taleb.jpg' },
+                          { name: 'بيل أكمان', role: 'مؤسس بيرشينج سكوير', img: '/Bill Ackman.jpg' },
+                          { name: 'جورج سوروس', role: 'مؤسس إدارة صندوق سوروس', img: '/18SOROS1-superJumbo.webp' },
+                          { name: 'بيتر ثيل', role: 'مؤسس بالانتير', img: '/Peter Thiel.jpg' },
+                          { name: 'سام ألتمان', role: 'الرئيس التنفيذي لـ OpenAI', img: '/Sam Altman.jpg' },
+                          { name: 'ريد هوفمان', role: 'مؤسس لينكد إن', img: '/Reid Hoffman.jpg' },
+                          { name: 'كارل إيكان', role: 'مستثمر وناشط مالي', img: '/Too Trending News on Trendstoday App  Carl Icahn_ #Billionaire Carl Icahn #invests $150M in new #super PAC to #influence #Congress_ Get #trendstoday app for more updates_.jpg' },
+                          { name: 'ستانلي دروكنميلر', role: 'مستثمر ومدير صناديق تحوط', img: '/Stanley Druckenmiller says the stock market is in an _absolute raging mania_.jpg' },
+                          { name: 'هوارد ماركس', role: 'مؤسس أوكتري كابيتال', img: '/“To achieve superior investment results, your insight into value has to be superior_ Thus you must learn things others don’t, see things differently or do a better job of analyzing them – ideally all .” - Howard Marks.jpg' },
+                          { name: 'محمد العريان', role: 'مستشار اقتصادي عالمي', img: '/El-Erian.jpg' },
+                          { name: 'مورغان هاوسل', role: 'مؤلف سيكولوجية المال', img: '/Morgan Housel no Expert XP 2025.jpg' },
+                          { name: 'مارك أندريسن', role: 'مؤسس أندريسن هورويتز', img: '/Marc Andreessen says AI will give rise to a new type of filmmaker_ _That_s a reason for profound optimism_.jpg' },
+                          { name: 'جون تمبلتون', role: 'مستثمر ورجل بر', img: '/Sir John Templeton - Life Story - https___www_templeton.org_sir-john-templeton_life-story.jpg' }
                         ].map(celeb => (
                           <button
                             key={celeb.name}
@@ -537,6 +554,67 @@ const App: React.FC = () => {
                         value={activeTestimonial.companyOrCity}
                         onChange={(e) => updateField('companyOrCity', e.target.value)}
                         className="w-full p-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-sm text-gray-900"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="w-full h-px bg-gray-100"></div>
+
+              {/* Section: Avatar Adjustments */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-gray-800 mb-2">
+                  <MonitorPlay size={18} className="text-indigo-500" />
+                  <h2 className="font-semibold text-lg">ضبط الصورة</h2>
+                </div>
+
+                <div className="space-y-4">
+                  <div>
+                    <div className="flex justify-between mb-1">
+                      <label className="text-xs font-medium text-gray-500">الحجم</label>
+                      <span className="text-xs text-indigo-600">{(activeTestimonial.avatarScale || 1).toFixed(1)}x</span>
+                    </div>
+                    <input
+                      type="range"
+                      min="0.5"
+                      max="3"
+                      step="0.1"
+                      value={activeTestimonial.avatarScale || 1}
+                      onChange={(e) => updateField('avatarScale', parseFloat(e.target.value))}
+                      className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <div className="flex justify-between mb-1">
+                        <label className="text-xs font-medium text-gray-500">أفقي (X)</label>
+                        <span className="text-xs text-indigo-600">{activeTestimonial.avatarX || 0}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-100"
+                        max="100"
+                        step="1"
+                        value={activeTestimonial.avatarX || 0}
+                        onChange={(e) => updateField('avatarX', parseInt(e.target.value))}
+                        className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                      />
+                    </div>
+                    <div>
+                      <div className="flex justify-between mb-1">
+                        <label className="text-xs font-medium text-gray-500">رأسي (Y)</label>
+                        <span className="text-xs text-indigo-600">{activeTestimonial.avatarY || 0}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="-100"
+                        max="100"
+                        step="1"
+                        value={activeTestimonial.avatarY || 0}
+                        onChange={(e) => updateField('avatarY', parseInt(e.target.value))}
+                        className="w-full h-1.5 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                       />
                     </div>
                   </div>

@@ -6,7 +6,9 @@ export interface Testimonial {
   avatarUrl: string;
   rating: number;
   text: string;
-  customCss?: string;
+  avatarScale?: number;
+  avatarX?: number;
+  avatarY?: number;
 }
 
 export interface ThemeConfig {

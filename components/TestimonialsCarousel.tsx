@@ -96,7 +96,11 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
                   src={currentTestimonial.avatarUrl}
                   alt={currentTestimonial.name}
                   className="profile-avatar"
-                  style={{ borderColor: theme.cardBg }}
+                  style={{ 
+                    borderColor: theme.cardBg,
+                    objectPosition: `${(currentTestimonial.avatarX || 0) + 50}% ${(currentTestimonial.avatarY || 0) + 50}%`,
+                    transform: `scale(${currentTestimonial.avatarScale || 1})`
+                  }}
                 />
               </div>
 
