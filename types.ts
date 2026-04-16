@@ -28,3 +28,13 @@ export interface TestimonialProps {
   autoPlay?: boolean;
   autoPlayInterval?: number;
 }
+
+export type AspectRatio = 'square' | 'story';
+
+export interface ImageSize {
+  id: AspectRatio;
+  name: string;
+  width: number;
+  height: number;
+  aspectRatioClass: string;
+}

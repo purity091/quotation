@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { Testimonial, ThemeConfig } from "../types";
+import { Testimonial, ThemeConfig, AspectRatio } from "../types";
 import './TestimonialsCarousel.css';
 
 interface ExtendedTestimonialProps {
@@ -8,6 +8,7 @@ interface ExtendedTestimonialProps {
   activeIndex: number;
   onIndexChange: (index: number) => void;
   theme: ThemeConfig;
+  aspectRatio: AspectRatio;
 }
 
 export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
@@ -15,6 +16,7 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
   activeIndex,
   onIndexChange,
   theme,
+  aspectRatio,
 }) => {
   const handleNext = () => {
     onIndexChange((activeIndex + 1) % testimonials.length);
@@ -32,7 +34,7 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
 
   return (
     <div
-      className="testimonial-wrapper aspect-square mx-auto"
+      className={`testimonial-wrapper ${aspectRatio === 'story' ? 'aspect-[9/16]' : 'aspect-square'} mx-auto`}
       style={{ width: '100%', maxWidth: '1080px' }}
     >
       {/* Dynamic Slide CSS */}
@@ -50,35 +52,44 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
           className="deco-circle deco-circle-top"
           style={{ 
             background: `radial-gradient(circle at center, ${theme.primary}, transparent)`,
-            filter: 'blur(100px)',
-            opacity: 0.2
+            filter: aspectRatio === 'story' ? 'blur(150px)' : 'blur(100px)',
+            opacity: 0.2,
+            width: aspectRatio === 'story' ? '40rem' : '20rem',
+            height: aspectRatio === 'story' ? '40rem' : '20rem',
           }}
         ></div>
         <div
           className="deco-circle deco-circle-bottom"
           style={{ 
             background: `radial-gradient(circle at center, ${theme.secondary}, transparent)`,
-            filter: 'blur(100px)',
-            opacity: 0.2
+            filter: aspectRatio === 'story' ? 'blur(150px)' : 'blur(100px)',
+            opacity: 0.2,
+            width: aspectRatio === 'story' ? '40rem' : '20rem',
+            height: aspectRatio === 'story' ? '40rem' : '20rem',
           }}
         ></div>
 
-        <div className="relative z-10 w-full h-full flex flex-col items-center justify-center p-10 md:p-14 pb-32 md:pb-48 text-center pt-16 md:pt-20">
+        <div className={`relative z-10 w-full h-full flex flex-col items-center p-10 md:p-14 ${aspectRatio === 'story' ? 'pt-40 pb-64 gap-12' : 'justify-center pb-32 md:pb-48 pt-16 md:pt-20'} text-center`}>
           {/* Quote Icon */}
           <div
             className="quote-icon mb-2 md:mb-4"
             style={{ color: theme.primary }}
           >
-            <Quote size={64} className="fill-current opacity-70" />
+            <Quote size={aspectRatio === 'story' ? 120 : 64} className="fill-current opacity-70" />
           </div>
 
 
           {/* Testimonial Content */}
           <div className="w-full flex-1 flex flex-col items-center justify-center transition-all duration-300">
             <p
-              className="testimonial-text w-[90%] md:w-[85%] mx-auto"
+              className={`testimonial-text w-[90%] md:w-[85%] mx-auto ${aspectRatio === 'story' ? 'text-4xl md:text-5xl leading-[1.6]' : ''}`}
               dir="rtl"
-              style={{ color: theme.textColor }}
+              style={{ 
+                color: theme.textColor,
+                fontSize: aspectRatio === 'story' ? '3.5rem' : undefined,
+                lineHeight: aspectRatio === 'story' ? '1.4' : undefined,
+                fontWeight: aspectRatio === 'story' ? '700' : undefined 
+              }}
             >
               "{currentTestimonial.text}"
             </p>
@@ -108,13 +119,19 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
               <div className="profile-info space-y-1 md:space-y-2">
                 <h3
                   className="profile-name"
-                  style={{ color: theme.textColor }}
+                  style={{ 
+                    color: theme.textColor,
+                    fontSize: aspectRatio === 'story' ? '2.8rem' : undefined
+                  }}
                 >
                   {currentTestimonial.name}
                 </h3>
                 <p
                   className="profile-meta"
-                  style={{ color: theme.textColor }}
+                  style={{ 
+                    color: theme.textColor,
+                    fontSize: aspectRatio === 'story' ? '1.8rem' : undefined 
+                  }}
                 >
                   {currentTestimonial.role} •{" "}
                   <span style={{ color: theme.primary, fontWeight: "bold" }}>
@@ -127,7 +144,7 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
         </div>
 
         {/* Ultra-Minimalist Branding Footer */}
-        <div className="branding-container absolute bottom-12 left-12 right-12 flex items-center justify-between z-20 transition-all duration-500">
+        <div className={`branding-container absolute ${aspectRatio === 'story' ? 'bottom-20 flex-col gap-8' : 'bottom-12 justify-between'} left-12 right-12 flex items-center z-20 transition-all duration-500`}>
 
           {/* Modern Branding Section (Swapped: Logo Right, Text Left) */}
           <div className="flex items-center gap-4 group" dir="rtl">
@@ -150,15 +167,15 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
               />
             </div>
 
-            <div className="flex flex-col text-right border-r-[1px] pr-6" style={{ borderColor: `${theme.primary}33` }}>
+            <div className={`flex flex-col text-right ${aspectRatio === 'story' ? 'border-r-0 pr-0 items-center' : 'border-r-[1px] pr-6'}`} style={{ borderColor: `${theme.primary}33` }}>
               <span
-                className="text-2xl font-black tracking-tight leading-none mb-2"
+                className={`${aspectRatio === 'story' ? 'text-3xl' : 'text-2xl'} font-black tracking-tight leading-none mb-2`}
                 style={{ color: theme.primary }}
               >
                 منصة المستثمر الاقتصادية
               </span>
               <span 
-                className="text-[10px] md:text-[18px] font-bold uppercase tracking-[0.1em] opacity-40"
+                className={`${aspectRatio === 'story' ? 'text-[20px]' : 'text-[10px] md:text-[18px]'} font-bold uppercase tracking-[0.1em] opacity-40`}
                 style={{ color: theme.textColor }}
               >
                 في رحلة لتطوير الاقتصاد العربي
@@ -167,7 +184,7 @@ export const TestimonialsCarousel: React.FC<ExtendedTestimonialProps> = ({
           </div>
 
           {/* Right side: Domain name (LTR) */}
-          <div className="flex flex-col items-end">
+          <div className={`flex flex-col ${aspectRatio === 'story' ? 'items-center' : 'items-end'}`}>
              <span
               dir="ltr"
               className="text-base md:text-xl font-black tracking-[0.2em] uppercase opacity-70"

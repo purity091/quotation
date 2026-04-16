@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import * as htmlToImage from 'html-to-image';
 import { TestimonialsCarousel } from './components/TestimonialsCarousel';
-import { Testimonial, ThemeConfig } from './types';
+import { Testimonial, ThemeConfig, ImageSize } from './types';
 import {
   Layout,
   Type,
@@ -173,11 +173,17 @@ const THEMES: ThemeConfig[] = [
   }
 ];
 
+const IMAGE_SIZES: ImageSize[] = [
+  { id: 'square', name: 'مربع (1:1)', width: 1080, height: 1080, aspectRatioClass: 'aspect-square' },
+  { id: 'story', name: 'ستوري (9:16)', width: 1080, height: 1920, aspectRatioClass: 'aspect-[9/16]' },
+];
+
 const App: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>(INITIAL_TESTIMONIALS);
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'content' | 'design' | 'css'>('content');
   const [currentTheme, setCurrentTheme] = useState<ThemeConfig>(THEMES[0]);
+  const [canvasSize, setCanvasSize] = useState<ImageSize>(IMAGE_SIZES[0]);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -343,14 +349,14 @@ const App: React.FC = () => {
         // Step 3: Render to PNG
         const dataUrl = await htmlToImage.toPng(carouselRef.current, {
           cacheBust: true,
-          pixelRatio: 2, // High quality 2160x2160
-          width: 1080,
-          height: 1080,
+          pixelRatio: 2, 
+          width: canvasSize.width,
+          height: canvasSize.height,
           ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }),
           style: {
-            width: '1080px',
-            height: '1080px',
-            maxWidth: '1080px',
+            width: `${canvasSize.width}px`,
+            height: `${canvasSize.height}px`,
+            maxWidth: `${canvasSize.width}px`,
             margin: '0',
             transform: 'scale(1)',
           }
@@ -630,6 +636,40 @@ const App: React.FC = () => {
               {/* Design Tab Content */}
               <div className="space-y-6">
 
+                {/* Image Size Selection */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 text-gray-800 mb-2">
+                    <Layout size={18} className="text-indigo-500" />
+                    <h2 className="font-semibold text-lg">أبعاد الصورة</h2>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {IMAGE_SIZES.map(size => (
+                      <button
+                        key={size.id}
+                        onClick={() => setCanvasSize(size)}
+                        className={`group relative p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-300 ${canvasSize.id === size.id 
+                          ? 'border-indigo-600 bg-indigo-50 shadow-md ring-4 ring-indigo-50' 
+                          : 'border-gray-100 hover:border-gray-300 bg-white hover:shadow-sm'}`}
+                      >
+                        <div className={`relative flex items-center justify-center bg-gray-100 rounded-lg border border-gray-200 transition-transform duration-300 group-hover:scale-110 ${size.id === 'square' ? 'w-10 h-10' : 'w-8 h-12'}`}>
+                           <div className={`border-2 border-indigo-400 opacity-40 rounded-sm ${size.id === 'square' ? 'w-6 h-6' : 'w-4 h-8'}`}></div>
+                        </div>
+                        <div className="text-center">
+                          <span className={`block text-xs font-bold ${canvasSize.id === size.id ? 'text-indigo-700' : 'text-gray-700'}`}>{size.name}</span>
+                          <span className="text-[10px] text-gray-400 font-mono">{size.width}x{size.height}</span>
+                        </div>
+                        {canvasSize.id === size.id && (
+                          <div className="absolute top-2 right-2 w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center shadow-sm">
+                            <Check size={12} className="text-white" />
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="w-full h-px bg-gray-100"></div>
+
                 {/* Themes List */}
                 <div className="space-y-3">
                   <div className="flex items-center gap-2 text-gray-800 mb-2">
@@ -847,7 +887,7 @@ const App: React.FC = () => {
         </header>
 
         {/* Canvas Area */}
-        <div className="flex-1 bg-[#E7E9ED] overflow-y-auto flex flex-col items-center justify-center p-8 relative">
+        <div className="flex-1 bg-[#E7E9ED] overflow-y-auto flex flex-col items-center p-8 relative">
 
           {/* Canvas Grid Background */}
           <div className="absolute inset-0 opacity-[0.03]" style={{
@@ -861,6 +901,7 @@ const App: React.FC = () => {
               activeIndex={activeIndex}
               onIndexChange={setActiveIndex}
               theme={currentTheme}
+              aspectRatio={canvasSize.id}
             />
           </div>
 
