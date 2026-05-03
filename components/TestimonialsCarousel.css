@@ -7,6 +7,8 @@
 
 .testimonial-wrapper {
   perspective: 1000px;
+  display: flex;
+  flex-direction: column;
 }
 
 .testimonial-card {
@@ -64,6 +66,7 @@
   font-weight: 600;
   font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
   letter-spacing: -0.01em;
+  min-height: 1.5em;
 }
 
 @media (min-width: 768px) {

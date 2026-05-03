@@ -254,40 +254,8 @@ const App: React.FC = () => {
     });
   };
 
-  // Helper: fetch Google Fonts CSS and embed all font files as base64
-  const fetchFontEmbedCSS = async (): Promise<string | undefined> => {
-    try {
-      const fontUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap';
-      // Use a user-agent that requests woff2 format
-      const fontRes = await fetch(fontUrl, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
-      });
-      let css = await fontRes.text();
-
-      // Find all url(...) references in the CSS
-      const urlRegex = /url\((https:\/\/[^)]+)\)/g;
-      const urls = new Set<string>();
-      let match;
-      while ((match = urlRegex.exec(css)) !== null) {
-        urls.add(match[1]);
-      }
-
-      // Fetch each font file and convert to base64 data URI
-      for (const fontFileUrl of urls) {
-        try {
-          const dataUri = await toDataUri(fontFileUrl);
-          css = css.split(fontFileUrl).join(dataUri);
-        } catch {
-          // If a single font file fails, skip it
-          console.warn('Failed to embed font file:', fontFileUrl);
-        }
-      }
-
-      return css;
-    } catch {
-      return undefined;
-    }
-  };
+  // Fonts are now self-hosted via @fontsource so html-to-image can fetch them
+  // without any CORS issues. No manual embedding needed.
 
   // Helper: convert all images inside a DOM node to base64 data URIs (for export)
   const convertImagesToBase64 = async (node: HTMLElement): Promise<Map<HTMLImageElement, string>> => {
@@ -336,45 +304,47 @@ const App: React.FC = () => {
   };
 
   const handleDownload = async () => {
-    if (carouselRef.current) {
-      setIsDownloading(true);
-      let originalSrcs: Map<HTMLImageElement, string> | null = null;
-      try {
-        // Step 1: Embed fonts as base64
-        const fontEmbedCSS = await fetchFontEmbedCSS();
+    if (!carouselRef.current) return;
+    setIsDownloading(true);
 
-        // Step 2: Convert all images to base64 to avoid CORS issues
-        originalSrcs = await convertImagesToBase64(carouselRef.current);
+    // Target the actual rendered card (not the wrapper div)
+    const cardEl = carouselRef.current.querySelector('[data-card="true"]') as HTMLElement | null;
+    if (!cardEl) {
+      alert('لم يتم العثور على الكارت.');
+      setIsDownloading(false);
+      return;
+    }
 
-        // Step 3: Render to PNG
-        const dataUrl = await htmlToImage.toPng(carouselRef.current, {
-          cacheBust: true,
-          pixelRatio: 2, 
-          width: canvasSize.width,
-          height: canvasSize.height,
-          ...(fontEmbedCSS ? { fontEmbedCSS } : { skipFonts: true }),
-          style: {
-            width: `${canvasSize.width}px`,
-            height: `${canvasSize.height}px`,
-            maxWidth: `${canvasSize.width}px`,
-            margin: '0',
-            transform: 'scale(1)',
-          }
-        });
+    let originalSrcs: Map<HTMLImageElement, string> | null = null;
 
-        // Step 4: Download
-        const link = document.createElement('a');
-        link.download = `testimonial-card-${Date.now()}.png`;
-        link.href = dataUrl;
-        link.click();
-      } catch (err) {
-        console.error('Failed to download image', err);
-        alert('حدث خطأ أثناء تحميل الصورة. حاول رفع الصورة من جهازك بدلاً من استخدام رابط خارجي.');
-      } finally {
-        // Restore original image sources
-        if (originalSrcs) restoreImages(originalSrcs);
-        setIsDownloading(false);
-      }
+    try {
+      // 1. Convert all images to base64 (fixes CORS for external images)
+      originalSrcs = await convertImagesToBase64(cardEl);
+
+      // 2. Calculate the exact scale factor so output = 1080px wide
+      //    This makes the exported image pixel-perfect identical to the preview
+      const previewWidth  = cardEl.offsetWidth  || 640;
+      const pixelRatio = canvasSize.width / previewWidth;
+
+      // 3. Capture — html-to-image auto-embeds the @fontsource fonts
+      //    since they're served from localhost (no CORS block)
+      const dataUrl = await htmlToImage.toPng(cardEl, {
+        cacheBust: true,
+        pixelRatio,
+      });
+
+      // 4. Download
+      const link = document.createElement('a');
+      link.download = `quote-card-${Date.now()}.png`;
+      link.href = dataUrl;
+      link.click();
+
+    } catch (err) {
+      console.error('Download failed', err);
+      alert('حدث خطأ أثناء تحميل الصورة.');
+    } finally {
+      if (originalSrcs) restoreImages(originalSrcs);
+      setIsDownloading(false);
     }
   };
 
@@ -489,6 +459,7 @@ const App: React.FC = () => {
                       <label className="block text-xs font-medium text-gray-500 mb-2">أو اختر من الشخصيات الشهيرة:</label>
                       <div className="flex items-center gap-2 flex-wrap pb-2">
                         {[
+                          { name: 'لورانس لاري فينك', role: 'الرئيس التنفيذي لشركة بلاك روك', img: '/لورانس لاري فينك.jpeg' },
                           { name: 'وارن بافيت', role: 'مستثمر ورجل أعمال', img: '/Warren Buffett.png' },
                           { name: 'تشارلي مونجر', role: 'مستثمر ونائب رئيس بيركشاير هاثاواي', img: '/Charlie Munger png.png' },
                           { name: 'بنيامين جراهام', role: 'أبو استثمار القيمة', img: '/Benjamin Graham.png' },
@@ -647,12 +618,12 @@ const App: React.FC = () => {
                       <button
                         key={size.id}
                         onClick={() => setCanvasSize(size)}
-                        className={`group relative p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-300 ${canvasSize.id === size.id 
-                          ? 'border-indigo-600 bg-indigo-50 shadow-md ring-4 ring-indigo-50' 
+                        className={`group relative p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all duration-300 ${canvasSize.id === size.id
+                          ? 'border-indigo-600 bg-indigo-50 shadow-md ring-4 ring-indigo-50'
                           : 'border-gray-100 hover:border-gray-300 bg-white hover:shadow-sm'}`}
                       >
                         <div className={`relative flex items-center justify-center bg-gray-100 rounded-lg border border-gray-200 transition-transform duration-300 group-hover:scale-110 ${size.id === 'square' ? 'w-10 h-10' : 'w-8 h-12'}`}>
-                           <div className={`border-2 border-indigo-400 opacity-40 rounded-sm ${size.id === 'square' ? 'w-6 h-6' : 'w-4 h-8'}`}></div>
+                          <div className={`border-2 border-indigo-400 opacity-40 rounded-sm ${size.id === 'square' ? 'w-6 h-6' : 'w-4 h-8'}`}></div>
                         </div>
                         <div className="text-center">
                           <span className={`block text-xs font-bold ${canvasSize.id === size.id ? 'text-indigo-700' : 'text-gray-700'}`}>{size.name}</span>
@@ -895,7 +866,14 @@ const App: React.FC = () => {
             backgroundSize: '20px 20px'
           }}></div>
 
-          <div ref={carouselRef} className="relative z-10">
+          <div
+            ref={carouselRef}
+            className="relative z-10"
+            style={{
+              width: canvasSize.id === 'story' ? '380px' : '640px',
+              flexShrink: 0,
+            }}
+          >
             <TestimonialsCarousel
               testimonials={testimonials}
               activeIndex={activeIndex}
